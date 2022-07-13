@@ -24,3 +24,13 @@ fn pause() {
     // Read a single byte and discard
     let _ = stdin.read(&mut [0u8]).unwrap();
 }
+
+//
+
+// echo "# meshing" >> README.md
+// git init
+// git add README.md
+// git commit -m "first commit"
+// git branch -M main
+// git remote add origin https://github.com/lesleyangel/meshing.git
+// git push -u origin main
