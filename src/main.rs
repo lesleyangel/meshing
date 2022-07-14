@@ -3,11 +3,6 @@ mod meshing;
 
 fn main() {
     println!("Hello, world!");
-
-    meshing::run(MeshStyle::Nomal(NomalInfo {
-        eta_num: 7,
-        fai_num: 6,
-    }));
     pause();
 }
 use std::io;
