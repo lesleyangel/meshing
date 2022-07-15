@@ -16,29 +16,48 @@ impl BlockInfo {
         let fai_size = (1. / self.fai_delta) as usize * self.fai_num; //block部分网格数
         let eta_mesh_delta = self.eta_delta / self.eta_num as f64; //每个block中网格间距
         let fai_mesh_delta = self.fai_delta / self.fai_num as f64; //每个block中网格间距
-        let eta_margin_size = ((1. - eta_size as f64 * self.eta_delta) / eta_mesh_delta) as usize;
-        let fai_margin_size = ((1. - fai_size as f64 * self.fai_delta) / fai_mesh_delta) as usize;
-        let eta_margin_delta = (1. - eta_size as f64 * self.eta_delta) / eta_margin_size as f64;
-        let fai_margin_delta = (1. - fai_size as f64 * self.fai_delta) / fai_margin_size as f64;
+        let eta_margin_size =
+            ((1. - eta_size as f64 * eta_mesh_delta) / eta_mesh_delta) as usize + 1;
+        let fai_margin_size =
+            ((1. - fai_size as f64 * fai_mesh_delta) / fai_mesh_delta) as usize + 1;
+        let eta_margin_delta = (1. - eta_size as f64 * eta_mesh_delta) / eta_margin_size as f64;
+        let fai_margin_delta = (1. - fai_size as f64 * fai_mesh_delta) / fai_margin_size as f64;
+
+        // println!("eta_size = {}", eta_size);
+        // println!("fai_size = {}", fai_size);
+        // println!("eta_mesh_delta = {}", eta_mesh_delta);
+        // println!("fai_mesh_delta = {}", fai_mesh_delta);
+        // println!("eta_margin_size = {}", eta_margin_size);
+        // println!("fai_margin_size = {}", fai_margin_size);
+        // println!("fai_margin_delta = {}", fai_margin_delta);
+        // println!("eta_margin_delta = {}", eta_margin_delta);
 
         let mut res = MeshMat {
-            fai_mesh: vec![vec![0.; eta_size + eta_margin_size]; fai_size + fai_margin_size],
-            eta_mesh: vec![vec![0.; eta_size + eta_margin_size]; fai_size + fai_margin_size],
+            fai_mesh: vec![
+                vec![0.; eta_size + eta_margin_size + 1];
+                fai_size + fai_margin_size + 1
+            ],
+            eta_mesh: vec![
+                vec![0.; eta_size + eta_margin_size + 1];
+                fai_size + fai_margin_size + 1
+            ],
         };
         for i in 0..res.fai_mesh.len() {
-            for j in 0..res.eta_mesh.len() {
-                res.fai_mesh[i][j] = if i < fai_size {
-                    fai_mesh_delta * i as f64 
+            for j in 0..res.eta_mesh[0].len() {
+                res.fai_mesh[i][j] = if i < fai_size + 1 {
+                    fai_mesh_delta * i as f64
                 } else {
                     res.fai_mesh[i - 1][j] + fai_margin_delta
                 };
-                res.eta_mesh[i][j] = if j < eta_size {
+                res.eta_mesh[i][j] = if j < eta_size + 1 {
                     eta_mesh_delta * j as f64
                 } else {
                     res.eta_mesh[i][j - 1] + eta_margin_delta
                 };
             }
         }
+        println!("{:?}",res.eta_mesh);
+        println!("{:?}",res.fai_mesh);
         Some(res)
     }
 

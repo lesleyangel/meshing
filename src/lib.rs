@@ -4,9 +4,18 @@ use libc::{c_char, c_double, c_int, c_uint, size_t};
 
 mod meshing;
 mod c_meshing;
+// use cxx::CxxVector;
 
-
-
+// #[cxx::bridge]
+// mod ffi {
+//     extern "Rust" {
+//         fn test_vector(vec:CxxVector<f64>);
+//     }
+// }
+// fn test_vector(vec:CxxVector<f64>)  {
+//     let vv = vec![1,2,3];
+// let res = CxxVector::from(vv);
+// }
 
 // test libc output
 #[no_mangle]

@@ -1,8 +1,24 @@
 use crate::meshing::{nomal_info::NomalInfo, MeshStyle};
 mod meshing;
+mod c_meshing;
+
+// use cxx::vector;
 
 fn main() {
     println!("Hello, world!");
+
+    // unsafe {
+    //     let res = c_meshing::get_mesh_block(c_meshing::c_block_info{
+    //         eta_delta: 0.3,
+    //         eta_num:3,
+    //         fai_delta: 0.3,
+    //         fai_num:3,
+    //     });
+    //     println!("{:?}", res.eta_mesh);
+    //     println!("{:?}", res.fai_mesh);
+    // }
+    
+    
     pause();
 }
 use std::io;
