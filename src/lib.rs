@@ -19,6 +19,26 @@ mod c_meshing;
 
 // test libc output
 #[no_mangle]
+pub extern "C" fn creat(data:c_double) -> *mut c_double {
+    let ptr = Box::new(data);
+    Box::into_raw(ptr)
+}
+#[no_mangle]
+pub unsafe extern "C" fn add1(ptr:*mut c_double) -> c_double{
+    *ptr = *ptr+1.0;
+    *ptr
+}
+#[no_mangle]
+pub unsafe extern  "C" fn delete_ptr(ptr:*mut c_double) {
+    if ptr.is_null() {
+        println!("void ptr!");
+        return;
+    }
+    Box::from_raw(ptr);
+    println!("delete it!");
+}
+
+#[no_mangle]
 pub extern "C" fn addition(a: c_int, b: c_int) -> c_int {
     println!("This is RUST！！");
     return a + b;

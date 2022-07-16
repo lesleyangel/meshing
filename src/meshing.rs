@@ -17,6 +17,27 @@ pub struct MeshMat {
     pub eta_mesh: Vec<Vec<f64>>,
 }
 
+impl MeshMat {
+    pub fn check(&self) -> bool {
+        if self.eta_mesh.len() != self.fai_mesh.len() {
+            return false;
+        } else {
+            for i in 0..self.eta_mesh.len() {
+                if self.eta_mesh[i].len() != self.fai_mesh[i].len() {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    pub fn eta_num(&self) -> usize{
+        self.eta_mesh[0].len()
+    }
+    pub fn fai_num(&self) -> usize{
+        self.eta_mesh.len()
+    }
+}
+
 //
 impl MeshStyle {
     pub fn meshing_points(&self) -> Option<MeshMat> {
@@ -27,5 +48,4 @@ impl MeshStyle {
         }
     }
 }
-
 
