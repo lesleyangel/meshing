@@ -16,12 +16,29 @@ impl BlockInfo {
         let fai_size = (1. / self.fai_delta) as usize * self.fai_num; //block部分网格数
         let eta_mesh_delta = self.eta_delta / self.eta_num as f64; //每个block中网格间距
         let fai_mesh_delta = self.fai_delta / self.fai_num as f64; //每个block中网格间距
-        let eta_margin_size =
-            ((1. - eta_size as f64 * eta_mesh_delta) / eta_mesh_delta) as usize + 1;
-        let fai_margin_size =
-            ((1. - fai_size as f64 * fai_mesh_delta) / fai_mesh_delta) as usize + 1;
-        let eta_margin_delta = (1. - eta_size as f64 * eta_mesh_delta) / eta_margin_size as f64;
-        let fai_margin_delta = (1. - fai_size as f64 * fai_mesh_delta) / fai_margin_size as f64;
+
+        let eta_margin = 1. - eta_size as f64 * eta_mesh_delta;
+        let fai_margin = 1. - fai_size as f64 * fai_mesh_delta;
+        let eta_margin_size = if eta_margin > eta_mesh_delta {
+            (eta_margin / eta_mesh_delta) as usize
+        } else if eta_margin > 0. {
+            1
+        } else if eta_margin == 0. {
+            0
+        } else {
+            0
+        }; //+ 1;
+        let fai_margin_size = if fai_margin > fai_mesh_delta {
+            (fai_margin / fai_mesh_delta) as usize
+        } else if fai_margin > 0. {
+            1
+        } else if fai_margin == 0. {
+            0
+        } else {
+            0
+        }; //+ 1;
+        let eta_margin_delta = eta_margin / if eta_margin_size != 0 {eta_margin_size as f64}else {1.} ;
+        let fai_margin_delta = fai_margin / if fai_margin_size != 0 {fai_margin_size as f64}else {1.} ;
 
         // println!("eta_size = {}", eta_size);
         // println!("fai_size = {}", fai_size);
@@ -41,6 +58,7 @@ impl BlockInfo {
                 vec![0.; eta_size + eta_margin_size + 1];
                 fai_size + fai_margin_size + 1
             ],
+            is_print: false,
         };
         for i in 0..res.fai_mesh.len() {
             for j in 0..res.eta_mesh[0].len() {
@@ -56,8 +74,8 @@ impl BlockInfo {
                 };
             }
         }
-        println!("{:?}",res.eta_mesh);
-        println!("{:?}",res.fai_mesh);
+        // println!("{:?}",res.eta_mesh);
+        // println!("{:?}",res.fai_mesh);
         Some(res)
     }
 

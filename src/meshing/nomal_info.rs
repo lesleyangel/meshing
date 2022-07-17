@@ -18,6 +18,7 @@ impl NomalInfo {
         Some(MeshMat {
             fai_mesh: fai_res,
             eta_mesh: eta_res,
+            is_print: false,
         })
     }
 }

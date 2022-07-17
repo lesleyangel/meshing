@@ -12,9 +12,11 @@ pub enum MeshStyle {
 }
 
 // 输出结果
+
 pub struct MeshMat {
     pub fai_mesh: Vec<Vec<f64>>,
     pub eta_mesh: Vec<Vec<f64>>,
+    pub is_print: bool,
 }
 
 impl MeshMat {
@@ -30,11 +32,24 @@ impl MeshMat {
         }
         return true;
     }
-    pub fn eta_num(&self) -> usize{
-        self.eta_mesh[0].len()
+    pub fn eta_num(&self) -> Result<usize, String> {
+        if self.is_print {
+            Ok(self.eta_mesh[0].len())
+        } else {
+            Err("Error: Never print license!".to_string())
+        }
     }
-    pub fn fai_num(&self) -> usize{
-        self.eta_mesh.len()
+    pub fn fai_num(&self) -> Result<usize, String> {
+        if self.is_print {
+            Ok(self.eta_mesh.len())
+        } else {
+            Err("Error: Never print license!".to_string())
+        }
+    }
+    pub fn print_license(&mut self) {
+        println!("Update in 2022/7/17");
+        println!("Creat by YYC ---v1.1.0");
+        self.is_print = true;
     }
 }
 
@@ -48,4 +63,3 @@ impl MeshStyle {
         }
     }
 }
-
