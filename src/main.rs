@@ -1,9 +1,10 @@
 // use crate::meshing::{nomal_info::NomalInfo, MeshStyle};
-mod meshing;
 mod c_meshing;
+mod meshing;
 
+use crate::meshing::MeshStyle;
 // use cxx::vector;
-
+use crate::meshing::block_info::BlockInfo;
 fn main() {
     println!("Hello, world!");
 
@@ -17,8 +18,14 @@ fn main() {
     //     println!("{:?}", res.eta_mesh);
     //     println!("{:?}", res.fai_mesh);
     // }
-    
-    
+    let info = BlockInfo {
+        eta_delta: 0.1111111111111,
+        eta_num: 5,
+        fai_delta: 0.166666666666666,
+        fai_num: 6,
+    };
+    let style = MeshStyle::Block(info);
+    style.meshing_points();
     pause();
 }
 use std::io;
@@ -45,3 +52,5 @@ fn pause() {
 // git branch -M main
 // git remote add origin https://github.com/lesleyangel/meshing.git
 // git push -u origin main
+
+// cargo build --release --target i686-pc-windows-msvc

@@ -47,8 +47,8 @@ impl MeshMat {
         }
     }
     pub fn print_license(&mut self) {
-        println!("Update in 2022/7/17");
-        println!("Creat by YYC ---v1.1.0");
+        println!("Update in 2022/7/20");
+        println!("Creat by YYC ---v1.1.1");
         self.is_print = true;
     }
 }

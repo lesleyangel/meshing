@@ -21,7 +21,7 @@ impl BlockInfo {
         let fai_margin = 1. - fai_size as f64 * fai_mesh_delta;
         let eta_margin_size = if eta_margin > eta_mesh_delta {
             (eta_margin / eta_mesh_delta) as usize
-        } else if eta_margin > 0. {
+        } else if eta_margin > 1e-6 {
             1
         } else if eta_margin == 0. {
             0
@@ -30,7 +30,7 @@ impl BlockInfo {
         }; //+ 1;
         let fai_margin_size = if fai_margin > fai_mesh_delta {
             (fai_margin / fai_mesh_delta) as usize
-        } else if fai_margin > 0. {
+        } else if fai_margin > 1e-6 {
             1
         } else if fai_margin == 0. {
             0
