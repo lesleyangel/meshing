@@ -1,13 +1,17 @@
 pub mod block_info;
 pub mod nomal_info;
+pub mod free_info;
 
 use block_info::BlockInfo;
 use nomal_info::NomalInfo;
+
+use self::free_info::FreeInfo;
 
 // 网格类型枚举
 pub enum MeshStyle {
     Nomal(NomalInfo), // 指定纵横网格数字
     Block(BlockInfo), // 通过分块指定网格划分
+    Free(FreeInfo),   // 通过指定每个分块的位置和网格数划分网格
     None,             // 无效的模式
 }
 
@@ -60,6 +64,7 @@ impl MeshStyle {
             MeshStyle::None => None,
             MeshStyle::Nomal(_info) => _info.calc_info(),
             MeshStyle::Block(_info) => _info.calc_info(),
+            MeshStyle::Free(_info) => _info.calc_info(),
         }
     }
 }

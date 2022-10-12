@@ -5,6 +5,7 @@ mod meshing;
 use crate::meshing::MeshStyle;
 // use cxx::vector;
 use crate::meshing::block_info::BlockInfo;
+use crate::meshing::free_info::FreeInfo;
 fn main() {
     println!("Hello, world!");
 
@@ -26,7 +27,24 @@ fn main() {
     };
     let style = MeshStyle::Block(info);
     style.meshing_points();
-    pause();
+
+
+    let info = FreeInfo {
+        eta_delta: vec![0.0,0.2,0.4,0.5,0.9],
+        eta_num: vec![1,1,1,1,2],
+        fai_delta: vec![0.0,0.2,0.4,0.5,0.9],
+        fai_num: vec![1,1,1,1,2],
+    };
+    let style = MeshStyle::Free(info);
+    let res = style.meshing_points();
+    match res {
+        None => println!("error"),
+        Some(data) => {
+            println!("{:?}", data.eta_mesh);
+            println!("{:?}", data.fai_mesh);
+        },
+    };
+    // pause();
 }
 use std::io;
 use std::io::prelude::*;
